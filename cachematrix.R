@@ -1,5 +1,20 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Code bellow allows to cache a once calculated inversion of a matrix; 
+## 2nd+ references to inversed matrix are produced from cache
+##
+## sample usage:
+##   mtr_cached <- makeCacheMatrix()
+##
+##   mtr <- matrix(rnorm(9),3,3)
+##   mtr_cached$set(mtr)
+##   cacheSolve(mtr_cached)
+##
+##   ##calling the second time should produce a message "from cache"
+##   cacheSolve(mtr_cached)
+##
+##   ##after calling set() function, message "from cache" should not appear
+##   mtr_cached$set(mtr)
+##   cacheSolve(mtr_cached)
+
 
 ## makeCacheMatrix
 ## returns a list of 4 functions:
@@ -31,19 +46,6 @@ makeCacheMatrix <- function(mtr = matrix()) {
 
 ## cacheSolve - produces an inverse of a matrix; prints a message if from cache
 ## assumption: matrix is square and invertible 
-## sample usage:
-##   mtr_cached <- makeCacheMatrix()
-##
-##   mtr <- matrix(rnorm(9),3,3)
-##   mtr_cached$set(mtr)
-##   cacheSolve(mtr_cached)
-##
-##   ##calling the second time should produce a message "from cache"
-##   cacheSolve(mtr_cached)
-##
-##   ##after calling set() function, message "from cache" should not appear
-##   mtr_cached$set(mtr)
-##   cacheSolve(mtr_cached)
 
 cacheSolve <- function(x, ...) {
         inv_mtr <- x$getInverse()
@@ -54,8 +56,9 @@ cacheSolve <- function(x, ...) {
             ##retrieve just to make sure it is set
             inv_mtr <- x$getInverse()
         }
-        else
+        else{
             message("from cache")
+        }
         
         inv_mtr
 }
